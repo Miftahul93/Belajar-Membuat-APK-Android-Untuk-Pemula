@@ -2,12 +2,66 @@ package com.example.denmas_mieftahh.belajarandroidpemula;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+import org.w3c.dom.Text;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private EditText edtWidth, edtHeight, edtLength;
+    private Button btnClculate;
+    private TextView tvResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        edtWidth = (EditText)findViewById(R.id.edt_width);
+        edtHeight = (EditText)findViewById(R.id.edt_height);
+        edtLength = (EditText)findViewById(R.id.edt_length);
+        btnClculate = (Button)findViewById(R.id.btn_calculate);
+        tvResult = (TextView)findViewById(R.id.tv_result);
+
+        btnClculate.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.btn_calculate) {
+            String length = edtLength.getText().toString().trim();
+            String width = edtWidth.getText().toString().trim();
+            String height = edtHeight.getText().toString().trim();
+
+            boolean isEmptyFields = false;
+
+            if (TextUtils.isEmpty(length)) {
+                isEmptyFields = true;
+                edtLength.setError("Field ini tidak boleh kosong Boss...");
+            }
+
+            if (TextUtils.isEmpty(width)) {
+                isEmptyFields = true;
+                edtWidth.setError("Field ini tidak boleh kosong juga Bosskuh...");
+            }
+
+            if (TextUtils.isEmpty(height)) {
+                isEmptyFields = true;
+                edtHeight.setError("Field ini juga harus diisi boskus...");
+            }
+
+            if (!isEmptyFields) {
+                double l = Double.parseDouble(length);
+                double w = Double.parseDouble(width);
+                double h = Double.parseDouble(height);
+
+                double volume = l*w*h;
+                tvResult.setText(String.valueOf(volume));
+            }
+        }
     }
 }
